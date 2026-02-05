@@ -4,7 +4,7 @@
   "info": {
     "singularName": "list",
     "pluralName": "lists",
-    "displayName": "lists"
+    "displayName": "List"
   },
   "options": {
     "draftAndPublish": true

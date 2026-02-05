@@ -30,6 +30,12 @@
       "relation": "oneToMany",
       "target": "api::list.list",
       "mappedBy": "board"
+    },
+    "workspace": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::workspace.workspace",
+      "inversedBy": "boards"
     }
   }
 }

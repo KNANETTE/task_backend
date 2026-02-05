@@ -4,7 +4,7 @@
   "info": {
     "singularName": "carte",
     "pluralName": "cartes",
-    "displayName": "carte"
+    "displayName": "Card"
   },
   "options": {
     "draftAndPublish": true
