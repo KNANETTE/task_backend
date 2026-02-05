@@ -71,6 +71,12 @@
       "relation": "oneToMany",
       "target": "api::board.board",
       "mappedBy": "users_permissions_user"
+    },
+    "workspaces": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::workspace.workspace",
+      "mappedBy": "users_permissions_user"
     }
   }
 }

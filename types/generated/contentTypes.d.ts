@@ -458,13 +458,17 @@ export interface ApiBoardBoard extends Struct.CollectionTypeSchema {
       'manyToOne',
       'plugin::users-permissions.user'
     >;
+    workspace: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::workspace.workspace'
+    >;
   };
 }
 
 export interface ApiCarteCarte extends Struct.CollectionTypeSchema {
   collectionName: 'cartes';
   info: {
-    displayName: 'carte';
+    displayName: 'Card';
     pluralName: 'cartes';
     singularName: 'carte';
   };
@@ -493,7 +497,7 @@ export interface ApiCarteCarte extends Struct.CollectionTypeSchema {
 export interface ApiListList extends Struct.CollectionTypeSchema {
   collectionName: 'lists';
   info: {
-    displayName: 'lists';
+    displayName: 'List';
     pluralName: 'lists';
     singularName: 'list';
   };
@@ -515,6 +519,47 @@ export interface ApiListList extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+  };
+}
+
+export interface ApiWorkspaceWorkspace extends Struct.CollectionTypeSchema {
+  collectionName: 'workspaces';
+  info: {
+    displayName: 'Workspace';
+    pluralName: 'workspaces';
+    singularName: 'workspace';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    boards: Schema.Attribute.Relation<'oneToMany', 'api::board.board'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::workspace.workspace'
+    > &
+      Schema.Attribute.Private;
+    public: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
+    publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 255;
+        minLength: 2;
+      }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    users_permissions_user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
   };
 }
 
@@ -1014,6 +1059,10 @@ export interface PluginUsersPermissionsUser
       Schema.Attribute.SetMinMaxLength<{
         minLength: 3;
       }>;
+    workspaces: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::workspace.workspace'
+    >;
   };
 }
 
@@ -1031,6 +1080,7 @@ declare module '@strapi/strapi' {
       'api::board.board': ApiBoardBoard;
       'api::carte.carte': ApiCarteCarte;
       'api::list.list': ApiListList;
+      'api::workspace.workspace': ApiWorkspaceWorkspace;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;
