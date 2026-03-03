@@ -73,7 +73,7 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::workspace.workspace",
-      "mappedBy": "user"
+      "mappedBy": "owner"
     }
   }
 }
