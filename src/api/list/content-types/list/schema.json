@@ -16,6 +16,10 @@
       "minLength": 3,
       "required": true
     },
+    "order": {
+      "type": "integer",
+      "required": true
+    },
     "background": {
       "type": "string",
       "default": "#FFFFFF"

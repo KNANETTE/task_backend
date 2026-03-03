@@ -11,6 +11,10 @@
   },
   "pluginOptions": {},
   "attributes": {
+    "order": {
+      "type": "integer",
+      "required": true
+    },
     "content": {
       "type": "text",
       "minLength": 10,

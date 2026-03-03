@@ -497,6 +497,7 @@ export interface ApiCardCard extends Struct.CollectionTypeSchema {
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::card.card'> &
       Schema.Attribute.Private;
+    order: Schema.Attribute.Integer & Schema.Attribute.Required;
     owner: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::users-permissions.user'
@@ -561,6 +562,7 @@ export interface ApiListList extends Struct.CollectionTypeSchema {
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::list.list'> &
       Schema.Attribute.Private;
+    order: Schema.Attribute.Integer & Schema.Attribute.Required;
     owner: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::users-permissions.user'
