@@ -30,7 +30,7 @@
     },
     "owner": {
       "type": "relation",
-      "relation": "OneToOne",
+      "relation": "oneToOne",
       "target": "plugin::users-permissions.user"
     },
     "user": {
