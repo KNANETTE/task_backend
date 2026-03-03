@@ -4,7 +4,7 @@
   "info": {
     "singularName": "workspace",
     "pluralName": "workspaces",
-    "displayName": "Workspace"
+    "displayName": "workspace"
   },
   "options": {
     "draftAndPublish": true
@@ -13,8 +13,6 @@
   "attributes": {
     "title": {
       "type": "string",
-      "minLength": 2,
-      "maxLength": 255,
       "required": true
     },
     "public": {
@@ -22,7 +20,20 @@
       "required": true,
       "default": false
     },
-    "users_permissions_user": {
+    "description": {
+      "type": "text"
+    },
+    "background": {
+      "type": "string",
+      "default": "#44DE66",
+      "required": true
+    },
+    "owner": {
+      "type": "relation",
+      "relation": "OneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "user": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",

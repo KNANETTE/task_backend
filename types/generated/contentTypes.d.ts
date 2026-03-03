@@ -433,7 +433,7 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
 export interface ApiBoardBoard extends Struct.CollectionTypeSchema {
   collectionName: 'boards';
   info: {
-    displayName: 'board';
+    displayName: 'Board';
     pluralName: 'boards';
     singularName: 'board';
   };
@@ -441,10 +441,13 @@ export interface ApiBoardBoard extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    backgroud: Schema.Attribute.String;
+    background: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'#FFFFFF'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
     lists: Schema.Attribute.Relation<'oneToMany', 'api::list.list'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::board.board'> &
@@ -454,10 +457,6 @@ export interface ApiBoardBoard extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    users_permissions_user: Schema.Attribute.Relation<
-      'manyToOne',
-      'plugin::users-permissions.user'
-    >;
     workspace: Schema.Attribute.Relation<
       'manyToOne',
       'api::workspace.workspace'
@@ -465,29 +464,69 @@ export interface ApiBoardBoard extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiCarteCarte extends Struct.CollectionTypeSchema {
-  collectionName: 'cartes';
+export interface ApiCardCard extends Struct.CollectionTypeSchema {
+  collectionName: 'cards';
   info: {
     displayName: 'Card';
-    pluralName: 'cartes';
-    singularName: 'carte';
+    pluralName: 'cards';
+    singularName: 'card';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    color: Schema.Attribute.String;
-    comment: Schema.Attribute.String;
+    background: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'#FFFFFF'>;
+    comments: Schema.Attribute.String;
+    content: Schema.Attribute.Text &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 10;
+      }>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    description: Schema.Attribute.String;
+    description: Schema.Attribute.Text;
+    labels: Schema.Attribute.Relation<'manyToMany', 'api::label.label'>;
     list: Schema.Attribute.Relation<'manyToOne', 'api::list.list'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<'oneToMany', 'api::carte.carte'> &
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::card.card'> &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiLabelLabel extends Struct.CollectionTypeSchema {
+  collectionName: 'labels';
+  info: {
+    displayName: 'Label';
+    pluralName: 'labels';
+    singularName: 'label';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    background: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'#804BA3'>;
+    cards: Schema.Attribute.Relation<'manyToMany', 'api::card.card'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::label.label'> &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 3;
+      }>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -505,9 +544,9 @@ export interface ApiListList extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    background: Schema.Attribute.String & Schema.Attribute.DefaultTo<'#FFFFFF'>;
     board: Schema.Attribute.Relation<'manyToOne', 'api::board.board'>;
-    cartes: Schema.Attribute.Relation<'oneToMany', 'api::carte.carte'>;
-    color: Schema.Attribute.String & Schema.Attribute.Required;
+    cards: Schema.Attribute.Relation<'oneToMany', 'api::card.card'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -515,7 +554,11 @@ export interface ApiListList extends Struct.CollectionTypeSchema {
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::list.list'> &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    title: Schema.Attribute.String & Schema.Attribute.Required;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 3;
+      }>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -525,7 +568,7 @@ export interface ApiListList extends Struct.CollectionTypeSchema {
 export interface ApiWorkspaceWorkspace extends Struct.CollectionTypeSchema {
   collectionName: 'workspaces';
   info: {
-    displayName: 'Workspace';
+    displayName: 'workspace';
     pluralName: 'workspaces';
     singularName: 'workspace';
   };
@@ -533,10 +576,14 @@ export interface ApiWorkspaceWorkspace extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    background: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'#44DE66'>;
     boards: Schema.Attribute.Relation<'oneToMany', 'api::board.board'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -547,16 +594,11 @@ export interface ApiWorkspaceWorkspace extends Struct.CollectionTypeSchema {
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<false>;
     publishedAt: Schema.Attribute.DateTime;
-    title: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.SetMinMaxLength<{
-        maxLength: 255;
-        minLength: 2;
-      }>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    users_permissions_user: Schema.Attribute.Relation<
+    user: Schema.Attribute.Relation<
       'manyToOne',
       'plugin::users-permissions.user'
     >;
@@ -1020,8 +1062,8 @@ export interface PluginUsersPermissionsUser
     draftAndPublish: false;
   };
   attributes: {
+    biography: Schema.Attribute.Text;
     blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
-    boards: Schema.Attribute.Relation<'oneToMany', 'api::board.board'>;
     confirmationToken: Schema.Attribute.String & Schema.Attribute.Private;
     confirmed: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     createdAt: Schema.Attribute.DateTime;
@@ -1078,7 +1120,8 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::board.board': ApiBoardBoard;
-      'api::carte.carte': ApiCarteCarte;
+      'api::card.card': ApiCardCard;
+      'api::label.label': ApiLabelLabel;
       'api::list.list': ApiListList;
       'api::workspace.workspace': ApiWorkspaceWorkspace;
       'plugin::content-releases.release': PluginContentReleasesRelease;

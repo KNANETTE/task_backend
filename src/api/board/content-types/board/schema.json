@@ -4,7 +4,7 @@
   "info": {
     "singularName": "board",
     "pluralName": "boards",
-    "displayName": "board"
+    "displayName": "Board"
   },
   "options": {
     "draftAndPublish": true
@@ -16,13 +16,23 @@
       "required": true,
       "unique": false
     },
-    "backgroud": {
-      "type": "string"
+    "description": {
+      "type": "text"
     },
-    "users_permissions_user": {
+    "background": {
+      "type": "string",
+      "default": "#FFFFFF",
+      "required": true
+    },
+    "owner": {
+      "type": "relation",
+      "relation": "OneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "workspace": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "plugin::users-permissions.user",
+      "target": "api::workspace.workspace",
       "inversedBy": "boards"
     },
     "lists": {
@@ -30,12 +40,6 @@
       "relation": "oneToMany",
       "target": "api::list.list",
       "mappedBy": "board"
-    },
-    "workspace": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::workspace.workspace",
-      "inversedBy": "boards"
     }
   }
 }

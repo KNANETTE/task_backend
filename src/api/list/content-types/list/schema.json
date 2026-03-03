@@ -13,11 +13,17 @@
   "attributes": {
     "title": {
       "type": "string",
+      "minLength": 3,
       "required": true
     },
-    "color": {
+    "background": {
       "type": "string",
-      "required": true
+      "default": "#FFFFFF"
+    },
+    "owner": {
+      "type": "relation",
+      "relation": "OneToOne",
+      "target": "plugin::users-permissions.user"
     },
     "board": {
       "type": "relation",
@@ -25,10 +31,10 @@
       "target": "api::board.board",
       "inversedBy": "lists"
     },
-    "cartes": {
+    "cards": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::carte.carte",
+      "target": "api::card.card",
       "mappedBy": "list"
     }
   }

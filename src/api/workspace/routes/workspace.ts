@@ -4,4 +4,18 @@
 
 import { factories } from '@strapi/strapi';
 
-export default factories.createCoreRouter('api::workspace.workspace');
+const uid = 'api::workspace.workspace'
+
+export default factories.createCoreRouter(uid, {
+    config: {
+        findOne: {
+            policies: [{ name: 'global::is_owner', config: { uid } }]
+        },
+        update: {
+            policies: [{ name: 'global::is_owner', config: { uid } }]
+        },
+        delete: {
+            policies: [{ name: 'global::is_owner', config: { uid } }]
+        }
+    }
+});

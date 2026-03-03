@@ -66,17 +66,14 @@
       "inversedBy": "users",
       "configurable": false
     },
-    "boards": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::board.board",
-      "mappedBy": "users_permissions_user"
+    "biography": {
+      "type": "text"
     },
     "workspaces": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::workspace.workspace",
-      "mappedBy": "users_permissions_user"
+      "mappedBy": "user"
     }
   }
 }
