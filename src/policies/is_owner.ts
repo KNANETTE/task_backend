@@ -11,7 +11,7 @@ export default async (ctx: any, config: any, { strapi }: any) => {
     const uid = config?.uid
     if (!uid) throw new ForbiddenError("Vous n'avez pas accès ici!")
 
-    const entry = strapi.db.query(uid).findOne({ where: { documentId: id }, populate: { owner: true } })
+    const entry = await strapi.db.query(uid).findOne({ where: { documentId: id }, populate: { owner: true } })
     if (!entry) throw new NotFoundError("Aucun résultat ne correspond à cette recherche!")
     if (entry.owner?.id !== user.id) throw new ForbiddenError("L'accès à cette ressource vous est refusé!")
 
