@@ -438,7 +438,7 @@ export interface ApiBoardBoard extends Struct.CollectionTypeSchema {
     singularName: 'board';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     background: Schema.Attribute.String &
@@ -476,7 +476,7 @@ export interface ApiCardCard extends Struct.CollectionTypeSchema {
     singularName: 'card';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     background: Schema.Attribute.String &
@@ -550,7 +550,7 @@ export interface ApiListList extends Struct.CollectionTypeSchema {
     singularName: 'list';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     background: Schema.Attribute.String & Schema.Attribute.DefaultTo<'#FFFFFF'>;
@@ -587,7 +587,7 @@ export interface ApiWorkspaceWorkspace extends Struct.CollectionTypeSchema {
     singularName: 'workspace';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     background: Schema.Attribute.String &
