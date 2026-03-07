@@ -6,29 +6,23 @@ type RelationAttribute = {
     inversedBy?: string
 }
 
-export async function cascadeDelete(uid: string, id: number, visited = new Set()) {
+export async function cascadeDelete(uid: string, id: number) {
     const model = strapi.getModel(uid as any)
-    console.log(model)
-    // if (visited.has(`${uid}:${id}`)) return
-    // visited.add(`${uid}:${id}`)
+    const attributes = Object.entries(model.attributes)
 
-    // const model = strapi.getModel(uid as any)
+    for (const [_, attribute] of attributes) {
+        const castedAttribute = attribute as RelationAttribute
+        if (castedAttribute.type !== 'relation') continue
+        if (castedAttribute.relation !== 'oneToMany') continue
+        if (!castedAttribute.mappedBy && !castedAttribute.inversedBy) continue
 
-    // for (const [_, attribute] of Object.entries(model.attributes)) {
-    //     const attr = attribute as RelationAttribute
+        const targetUID = castedAttribute.target
+        const foreignKey = castedAttribute.mappedBy || castedAttribute.inversedBy
+        const children = await strapi.db.query(targetUID).findMany({ where: { [foreignKey]: id } })
 
-    //     if (!attr.mappedBy && !attr.inversedBy) continue
-    //     if (attr.type !== 'relation') continue
-    //     if (!attr.target) continue
-
-    //     const targetUID = attr.target
-    //     const foreignKey = attr.mappedBy || attr.inversedBy
-    //     const relationEntries = await strapi.db.query(targetUID).findMany({ where: { [foreignKey]: id } })
-
-    //     for (const entry of relationEntries) {
-    //         await cascadeDelete(targetUID, entry.id, visited)
-    //         await strapi.db.query(targetUID).delete({ where: { id: entry.id } })
-    //     }
-    // }
-
+        for (const child of children) {
+            await cascadeDelete(targetUID, child.id)
+            await strapi.db.query(targetUID).delete({ where: { id: child.id } })
+        }
+    }
 }
