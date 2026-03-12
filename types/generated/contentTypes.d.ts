@@ -479,9 +479,6 @@ export interface ApiCardCard extends Struct.CollectionTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
-    background: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'#FFFFFF'>;
     comments: Schema.Attribute.String;
     content: Schema.Attribute.Text &
       Schema.Attribute.Required &
@@ -520,9 +517,6 @@ export interface ApiLabelLabel extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    background: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'#804BA3'>;
     cards: Schema.Attribute.Relation<'manyToMany', 'api::card.card'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -553,7 +547,6 @@ export interface ApiListList extends Struct.CollectionTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
-    background: Schema.Attribute.String & Schema.Attribute.DefaultTo<'#FFFFFF'>;
     board: Schema.Attribute.Relation<'manyToOne', 'api::board.board'>;
     cards: Schema.Attribute.Relation<'oneToMany', 'api::card.card'>;
     createdAt: Schema.Attribute.DateTime;

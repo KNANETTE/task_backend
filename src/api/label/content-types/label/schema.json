@@ -16,11 +16,6 @@
       "minLength": 3,
       "required": true
     },
-    "background": {
-      "type": "string",
-      "default": "#804BA3",
-      "required": true
-    },
     "cards": {
       "type": "relation",
       "relation": "manyToMany",

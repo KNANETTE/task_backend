@@ -20,10 +20,6 @@
       "type": "integer",
       "required": true
     },
-    "background": {
-      "type": "string",
-      "default": "#FFFFFF"
-    },
     "owner": {
       "type": "relation",
       "relation": "oneToOne",

@@ -20,11 +20,6 @@
       "minLength": 10,
       "required": true
     },
-    "background": {
-      "type": "string",
-      "default": "#FFFFFF",
-      "required": true
-    },
     "description": {
       "type": "text",
       "required": false
