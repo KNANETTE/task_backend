@@ -479,7 +479,6 @@ export interface ApiCardCard extends Struct.CollectionTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
-    comments: Schema.Attribute.String;
     content: Schema.Attribute.Text &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{

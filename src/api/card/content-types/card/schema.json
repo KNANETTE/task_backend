@@ -24,9 +24,6 @@
       "type": "text",
       "required": false
     },
-    "comments": {
-      "type": "string"
-    },
     "owner": {
       "type": "relation",
       "relation": "oneToOne",
